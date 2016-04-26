@@ -81,7 +81,7 @@ class	DHCPRequest:
 		return packet
 
 if __name__ == "__main__":
-	input("Press any key to start DHCP client program")
+	input("Press any key to start DHCP client program\n")
 	dhcp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	dhcp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 	print("send DISCOVER packet\n")
@@ -89,6 +89,6 @@ if __name__ == "__main__":
 	dhcp.sendto(requestPacket.buildPacket(), ('<broadcast>', 67))
 	print("send DHCPREQUEST packet\n")
 	dhcp.close()
-	input("Press any key to close DHCP client program")
+	input("Press any key to close DHCP client program\n")
 	exit()
 
