@@ -7,7 +7,7 @@ import struct
 from uuid import getnode as get_mac
 from random import randint
 
-def getMacBytes();
+def getMacBytes():
 	mac = str(hex(get_mac()))
 	mac = mac[2:]
 	while len(mac) < 12:
@@ -86,7 +86,7 @@ if __name__ == "__main__":
 	dhcp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 	print("send DISCOVER packet\n")
 	requestPacket = DHCPRequest()
-	dhcp.sendto(requestPacket.buildPacket(), ('<broadcast>', 67))
+	dhcp.sendto(requestPacket.DHCPPacket(), ('<broadcast>', 67))
 	print("send DHCPREQUEST packet\n")
 	dhcp.close()
 	input("Press any key to close DHCP client program\n")
