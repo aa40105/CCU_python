@@ -28,7 +28,7 @@ class	DHCPDiscover:
 	def DHCPPacket(self):
 		macb = getMacBytes()
 		packet = b''
-		packet += b'\x02'		#OP
+		packet += b'\x01'		#OP
 		packet += b'\x01'		#HTYPE
 		packet += b'\x06'		#HLEN
 		packet += b'\x00'		#HOPS
@@ -62,7 +62,7 @@ class	DHCPRequest:
 		packet += b'\x00'		#HOPS
 		packet += b'\x39\x03\xF3\x26'	#XID
 		packet += b'\x00\x00'		#SECS
-		packet += b'\x00\x00'		#FLAGS
+		packet += b'\x80\x00'		#FLAGS
 		packet += b'\x00\x00\x00\x00'	#CIADDR(client IP address)
 		packet += b'\x00\x00\x00\x00'	#YIADDR(Your IP address)
 		packet += b'\xc0\xA8\x01\x01'	#SIADDR(Server IP address)
