@@ -81,13 +81,13 @@ class	DHCPAck:
 
 if __name__ == "__main__":
 	input("Press any key to start DHCP server program\n")
-	dhcp = socket.socket.AF_INET, socket, SOCK_DGRAM)
+	dhcp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	dhcp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
 	try:
-		dhcps.bind(('',68)) #bind port 68
+		dhcp.bind(('',67)) #bind port 67
 	except Exception as e:
-		print("port 68 in use")
+		print("port 67 in use")
 		dhcp.close()
 		input('Press any key to quit')
 		exit()
