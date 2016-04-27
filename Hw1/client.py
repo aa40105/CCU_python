@@ -84,10 +84,25 @@ if __name__ == "__main__":
 	input("Press any key to start DHCP client program\n")
 	dhcp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	dhcp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+	try:
+		dhcp.bind(('',68))
+	except Exception as e:
+		dhcp.close()
+		input('port 68 is be used')
+		exit()
+
 	print("send DISCOVER packet\n")
+	discoverPacket = DHCPDiscover()
+	dhcp.sendto(discoverPacket.DHCPPacket(), ('<broadcast>', 67))
+	while True:
+		data = dhcp.recv(1024)
+		if data == '':
+			break
+		else:
+			break
+	print("send DHCPREQUEST packet\n")
 	requestPacket = DHCPRequest()
 	dhcp.sendto(requestPacket.DHCPPacket(), ('<broadcast>', 67))
-	print("send DHCPREQUEST packet\n")
 	dhcp.close()
 	input("Press any key to close DHCP client program\n")
 	exit()
