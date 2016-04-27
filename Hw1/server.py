@@ -89,23 +89,21 @@ if __name__ == "__main__":
 		dhcp.close()
 		input('Press any key to quit')
 		exit()
-	try:
-		while True:
-			data = dhcp.recv(1024)
-			if data == '':
-				break
-			else:
-				break
+	while True:
+		data = dhcp.recv(1024)
+		if data == '':
+			break
+		else:
+			break
 
 	offerPacket = DHCPOffer()
 	dhcp.sendto(offerPacket.DHCPPacket(), ('<broadcast>', 68))
-	try:
-		while True:
-			data = dhcp.recv(1024)
-			if data == '':
-				break
-			else:
-				break
+	while True:
+		data = dhcp.recv(1024)
+		if data == '':
+			break
+		else:
+			break
 	offerAck = DHCPAck()
 	dhcp.sendto(offerAck.DHCPPacket(), ('<broadcast>', 68))
 	dhcp.close()
