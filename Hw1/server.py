@@ -1,6 +1,6 @@
 #This is a server program about DHCP
 #20160420 by HKK
-#github link:
+#github link:https://github.com/aa40105/CCU_python/tree/master/Hw1
 
 import socket
 import struct
