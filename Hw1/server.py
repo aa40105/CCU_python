@@ -42,12 +42,11 @@ class	DHCPOffer:
 		packet += macb			#CHADDR(Client hardware address)
 		packet += b'\x00\x00\x00\x00\x00'#Client hardware address padding
 		packet += b'\x00\x00\x00\x00\x00'#
-		packet += b'\x00' * 67		#67
-		packet += b'\x02' * 125		#125
+		packet += b'\x00' * 192		#192
 		packet += b'\x63\x82\x53\x63'	#Magic cookie: DHCP
-		packet += b'\x35\x01\x02'	#Option: DHCP Offer
-		packet += b'\x3d\x06' + macb	#
-		packet += b'\x37\x03\x03\x01\x06'#DHCP Options 53
+		packet += b'\x35\x01\x02'	#Option: DHCP Offer 53
+		packet += b'\x3d\x06' + macb	#Client identifier
+		packet += b'\x37\x03\x03\x01\x06'#Option 55 Parameter Request list
 		packet += b'\xff'		#End Option
 		return packet
 
@@ -70,10 +69,9 @@ class	DHCPAck:
 		packet += macb			#CHADDR(Client hardware address)
 		packet += b'\x00\x00\x00\x00\x00'#Client hardware address padding
 		packet += b'\x00\x00\x00\x00\x00'#
-		packet += b'\x00' * 67		#67
-		packet += b'\x00' * 125		#125
+		packet += b'\x00' * 192		#192
 		packet += b'\x63\x82\x53\x63'	#Magic cookie: DHCP
-		packet += b'\x35\x01\x05'	#Option: DHCP Ack
+		packet += b'\x35\x01\x05'	#Option:53 DHCP Ack
 		packet += b'\xff'		#End Option
 		return packet
 

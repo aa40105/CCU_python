@@ -43,12 +43,11 @@ class	DHCPDiscover:
 		packet += b'\x00\x00\x00\x00'	#Client hardware address padding
 		packet += b'\x00\x00\x00\x00'	#Client hardware address padding
 		packet += b'\x00\x00'		#Client hardware address padding
-		packet += b'\x00' * 67		#67
-		packet += b'\x00' * 125		#125
-		packet += b'\x63\x82\x53\x63'	#Magic cookie: DHCP
+		packet += b'\x00' * 192		#192
+		packet += b'\x63\x82\x53\x63'#Magic cookie: DHCP
 		packet += b'\x35\x01\x01'	#Option: DHCP Discover
-		packet += b'\x3d\x06' + macb	#
-		packet += b'\x37\x03\x03\x01\x06'#DHCP Options 53
+		packet += b'\x3d\x06' + macb#Option: 61 Client identifier
+		packet += b'\x37\x03\x03\x01\x06'#Options 55 Parameter Request list
 		packet += b'\xff'		#End Options 
 		return packet
 
@@ -71,8 +70,7 @@ class	DHCPRequest:
 		packet += b'\x00\x00\x00\x00'	#Client hardware address padding
 		packet += b'\x00\x00\x00\x00'	#Client hardware address padding
 		packet += b'\x00\x00'		#Client hardware address padding
-		packet += b'\x00' * 67		#67
-		packet += b'\x00' * 125		#125
+		packet += b'\x00' * 192		#192
 		packet += b'\x63\x82\x53\x63'	#Magic cookie: DHCP
 		packet += b'\x35\x01\x03'	#Option: DHCP Request
 		packet += b'\x3d\x06' + macb	#
