@@ -7,9 +7,9 @@ import sys, socket, select, string, os
 #hide passwd
 def hide_passwd():
 	os.system("stty -echo")
-	hidenpass = input ("passwd:")
+	hidenpass = input ('passwd:')
 	os.system("stty echo")
-	return hidepass
+	return hidenpass
 
 #main function
 
@@ -27,22 +27,25 @@ if __name__ == "__main__":
 		print ("Unable to connect to Server")
 		sys.exit()
 
-	print ("Connect to server success!")
-	user = input('user:')
-	print (user)
+	print ("Connect to server success!\n")
+	user = input("user:")
+	#print (user)
 	passwd = hide_passwd()
-
+	userpwd = user + ' ' + passwd
+	client_socket.send(str.encode(userpwd))
 	while 1:
 		socket_list = [sys.stdin, client_socket]
 		read_sockets, write_sockets, error_sockets = select.select(socket_list, [], [])
+
 		for sock in read_sockets:
 			if sock == client_socket:
-				data = sock.recv[1024]
+				data = sock.recv(1024)
 				if not data:
 					print("Disconneted from chat server\n")
 					sys.exit()
 				else:
-					tmp = data.decode('utf-8')
-					temp = tmp.split()
 					print(data.decode('utf-8'))
-			
+			else:
+				msg = input('>')
+				if(msg == 'logout'):
+					client_socket.send(str.encode(msg + ' ' + user))
