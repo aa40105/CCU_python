@@ -169,6 +169,7 @@ if __name__ == "__main__":
 								for socket in SOCKET_LIST:
 									if(socket != server_socket and socket != sock):
 										socket.send(str.encode("\nreceive from "+ buff))
+						elif(userpwd[0] == 'sendfile'):
 									print("sucess")
 								
 								
