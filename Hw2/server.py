@@ -40,7 +40,7 @@ if __name__ == "__main__":
 						if(userpwd[0] == 'hkk'):
 							if(userpwd[1] == 'hkkpw'):
 								name_list.append('hkk')
-								sock.sendall(str.encode("Hello hkk")
+								sock.sendall(str.encode("Hello hkk"))
 						else:
 							print("wrong id or wrong passwd")
 				except:
