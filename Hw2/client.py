@@ -47,5 +47,12 @@ if __name__ == "__main__":
 					print(data.decode('utf-8'))
 			else:
 				msg = input('>')
-				if(msg == 'logout'):
+				metamsg = msg.split(' ')
+				if(metamsg[0] == 'logout'):
+					client_socket.send(str.encode(msg + ' ' + user))
+				elif(metamsg[0] == 'friend'and metamsg[1]=='list'):
+					client_socket.send(str.encode(msg + ' ' + user))
+				elif(metamsg[0] == 'friend'and metamsg[1]=='add'):
+					client_socket.send(str.encode(msg + ' ' + user))
+				elif(metamsg[0] == 'friend'and metamsg[1]=='rm'):
 					client_socket.send(str.encode(msg + ' ' + user))

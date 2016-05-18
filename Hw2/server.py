@@ -8,11 +8,15 @@ import sys, socket, select, string, os
 SOCKET_LIST = []
 RECV_BUFFER = 1024
 name_list = []
-hkkfriendlist = []
-cmhfriendlist = []
-rangefriendlist = []
+hkkfriend = []
+cmhfriend = []
+rangefriend = []
 #0 hkk 1 cmh 2 range
-statuslist = []
+statuslist = ["offline","offline","offline"]
+hkkoffline = []
+cmhoffline = []
+rangeoffline =[]
+
 
 #main function
 if __name__ == "__main__":
@@ -43,6 +47,8 @@ if __name__ == "__main__":
 							if(userpwd[1] =='hkkpw'):
 								name_list.append('hkk')
 								sock.sendall(str.encode("\nHello hkk "))
+								statuslist[0] = "online"
+								#print(statuslist[0])
 							else:
 								sock.sendall(str.encode("\nwrong id or passwd "))
 								SOCKET_LIST.remove(sock)
@@ -51,6 +57,8 @@ if __name__ == "__main__":
 							if(userpwd[1] =='cmhpw'):
 								name_list.append('cmh')
 								sock.sendall(str.encode("\nHello cmh "))
+								statuslist[1] = "online"
+								#print(statuslist[1])
 							else:
 								sock.sendall(str.encode("\nwrong id or passwd "))
 								SOCKET_LIST.remove(sock)
@@ -59,18 +67,92 @@ if __name__ == "__main__":
 							if(userpwd[1] =='rangepw'):
 								name_list.append('range')
 								sock.sendall(str.encode("\nHello range "))
+								statuslist[2] = "online"
+								#print(statuslist[2])
 							else:
 								sock.sendall(str.encode("\nwrong id or passwd "))
 								SOCKET_LIST.remove(sock)
 								sock.close()
+						#logout
 						elif(userpwd[0] =='logout'):
 							sock.sendall(str.encode("\n"+userpwd[1]+" is logout"))
+							if(userpwd[1] == 'hkk'):
+								statuslist[0] = "offline"
+							elif(userpwd[1] == 'cmh'):
+								statuslist[1] = "offline"
+							elif(userpwd[1] == 'range'):
+								statuslist[2] = "offline"
 							SOCKET_LIST.remove(sock)
 							name_list.remove(userpwd[1])
 							sock.close()
+						#friend list
 						elif(userpwd[0] =='friend' and userpwd[1] == 'list'):
-							sock.sendall(str.encode("\n"+user))
-							
+							if(userpwd[2] == 'hkk'):
+								for x in hkkfriend:
+									if(x == 'cmh'):
+										sock.sendall(str.encode("\ncmh " + statuslist[1]))
+									elif(x == 'range'):												sock.sendall(str.encode("\nrange " + statuslist[2]))
+							elif(userpwd[2] == 'cmh'):
+								for x in cmhfriend:
+									if(x == 'hkk'):
+										sock.sendall(str.encode("\nhkk " + statuslist[0]))
+									elif(x == 'range'):												sock.sendall(str.encode("\nrange " + statuslist[2]))
+							elif(userpwd[2] == 'range'):
+								for x in rangefriend:
+									if(x == 'hkk'):
+										sock.sendall(str.encode("\nhkk " + statuslist[0]))
+									elif(x == 'cmh'):												sock.sendall(str.encode("\ncmh " + statuslist[2]))
+						#friend add
+						elif(userpwd[0] =='friend' and userpwd[1]=='add'):
+							#print(userpwd[3])
+							if(userpwd[3] == 'hkk'):
+								if userpwd[2] not in hkkfriend: 		
+									hkkfriend.append(userpwd[2])
+									sock.sendall(str.encode("\n"+userpwd[2]+' added into the friend list'))
+								else :
+									sock.sendall(str.encode("\nfriend is exist")) 
+							elif(userpwd[3] == 'cmh'):
+								if userpwd[2] not in cmhfriend: 		
+									cmhfriend.append(userpwd[2])
+									sock.sendall(str.encode("\n"+userpwd[2]+' added into the friend list'))
+								else:
+									sock.sendall(str.encode("\nfriend is exist")) 
+							elif(userpwd[3] == 'range'):
+								if userpwd[2] not in rangefriend: 		
+									rangefriend.append(userpwd[2])
+									sock.sendall(str.encode("\n"+userpwd[2]+' added into the friend list'))
+								else:
+									sock.sendall(str.encode("\nfriend is exist")) 
+						#friend remove
+						elif(userpwd[0] =='friend' and userpwd[1]=='rm'):
+							if(userpwd[3] == 'hkk'):
+								if userpwd[2] in hkkfriend: 		
+									hkkfriend.remove(userpwd[2])
+									sock.sendall(str.encode("\n"+userpwd[2]+' removed from the friend list'))
+								else :
+									sock.sendall(str.encode("\nfriend does't exist")) 
+							elif(userpwd[3] == 'cmh'):
+								if userpwd[2] in cmhfriend: 		
+									cmhfriend.remove(userpwd[2])
+									sock.sendall(str.encode("\n"+userpwd[2]+' removed from the friend list'))
+								else :
+									sock.sendall(str.encode("\nfriend does't exist")) 
+							elif(userpwd[3] == 'range'):
+								if userpwd[2] in rangefriend: 		
+									rangefriend.remove(userpwd[2])
+									sock.sendall(str.encode("\n"+userpwd[2]+' removed from the friend list'))
+								else :
+									sock.sendall(str.encode("\nfriend does't exist")) 
+						#send to online
+						elif(userpwd[0] == 'send'):
+							while(buff < (len(userpewd-1)):
+							if(userpwd[1] =='hkk'and statuslist[0] =='online' ):
+								for socket in SOCKET_LIST:
+									socket.send(str.encode(user + ' say: '+
+								
+							if(userpwd[1] =='cmh'and statuslist[1] =='online' ):
+								
+							if(userpwd[1] =='range'and statuslist[2] =='online' ):
 				except:
 					print('')
 
