@@ -44,6 +44,10 @@ if __name__ == "__main__":
 					print("Disconneted from chat server\n")
 					sys.exit()
 				else:
+					tmpdecode = data.decode("utf-8")
+					tmp = tmpdecode.split(' ')
+					if(tmp[0] == 'receive' and tmp[2] != user):
+						print(data.decode('utf-8'))
 					print(data.decode('utf-8'))
 			else:
 				msg = input('>')
@@ -55,4 +59,8 @@ if __name__ == "__main__":
 				elif(metamsg[0] == 'friend'and metamsg[1]=='add'):
 					client_socket.send(str.encode(msg + ' ' + user))
 				elif(metamsg[0] == 'friend'and metamsg[1]=='rm'):
+					client_socket.send(str.encode(msg + ' ' + user))
+				elif(metamsg[0] == 'send'):
+					client_socket.send(str.encode(msg + ' ' + user))
+				elif(metamsg[0] == 'sendfile'):
 					client_socket.send(str.encode(msg + ' ' + user))

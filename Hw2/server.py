@@ -16,6 +16,9 @@ statuslist = ["offline","offline","offline"]
 hkkoffline = []
 cmhoffline = []
 rangeoffline =[]
+hkkonline =''
+cmhonline =''
+rangeonline = ''
 
 
 #main function
@@ -145,14 +148,30 @@ if __name__ == "__main__":
 									sock.sendall(str.encode("\nfriend does't exist")) 
 						#send to online
 						elif(userpwd[0] == 'send'):
-							while(buff < (len(userpewd-1)):
+							num = len(userpwd) -1
+							buff =''
+							count = 2;
+							
+							print(num)
+							buff = buff + userpwd[num] + ' say '
+							while(count < num):
+								buff = buff + userpwd[count] + ' '
+								count += 1
 							if(userpwd[1] =='hkk'and statuslist[0] =='online' ):
 								for socket in SOCKET_LIST:
-									socket.send(str.encode(user + ' say: '+
+									if(socket != server_socket and socket != sock):
+										socket.send(str.encode("\nreceive from "+ buff))
+							elif(userpwd[1] =='cmh'and statuslist[1] =='online' ):
+								for socket in SOCKET_LIST:
+									if(socket != server_socket and socket != sock):
+										socket.send(str.encode("\nreceive from "+ buff))
+							elif(userpwd[1] =='range'and statuslist[2] =='online' ):
+								for socket in SOCKET_LIST:
+									if(socket != server_socket and socket != sock):
+										socket.send(str.encode("\nreceive from "+ buff))
+									print("sucess")
 								
-							if(userpwd[1] =='cmh'and statuslist[1] =='online' ):
 								
-							if(userpwd[1] =='range'and statuslist[2] =='online' ):
 				except:
 					print('')
 
