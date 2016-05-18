@@ -22,4 +22,18 @@ if __name__ == "__main__":
 	SOCKET_LIST.append(serversocket)
 	
 	print ("Server started !!")
+	
+	while 1:
+		read_sockets, write_sockets,error_sockets = select.select(SOCKET_LIST,[],[],0)
+		for sock in read_sockets:
+			if(sock == server_socket):
+				sc, sockname = server_socket.accept()
+				SOCKET_LIST.append(sc)
+			else:
+				try:
+					data = sock.recv(RECV_BUFFER)
 
+					if data:
+						dedata = data.decode("utf-8")
+						userpwd = dedata.split(' ')
+						#if(

@@ -26,10 +26,22 @@ if __name__ == "__main__":
 	except :
 		print ("Unable to connect to Server")
 		sys.exit()
+
 	print ("Connect to server success!")
 	user = input ("user: ")
 	passwd = hide_passwd()
 
 	while 1:
 		socket_list = [sys.stdin, clientsocket]
-
+		read_sockets, write_sockets, error_sockets = select.select(socket_list, [], [])
+		for sock in read_sockets:
+			if sock == s:
+				data = sock.recv[1024]
+				if not data:
+					print("Disconneted from chat server\n")
+					sys.exit()
+				else:
+					tmp = data.decode('utf-8')
+					temp = tmp.split()
+					print(data.decode('utf-8'))
+			
