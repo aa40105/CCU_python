@@ -5,7 +5,7 @@
 import sys, socket, select, string, os
 
 #hide passwd
-def hide_passwd:
+def hide_passwd():
 	os.system("stty -echo")
 	hidenpass = input ("passwd:")
 	os.system("stty echo")
