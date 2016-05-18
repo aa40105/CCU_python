@@ -38,7 +38,7 @@ if __name__ == "__main__":
 						userpwd = dedata.split(' ')
 						
 						if(userpwd[0] == 'hkk'):
-							if(userpwd[1] == 'hkkpw')
+							if(userpwd[1] == 'hkkpw'):
 								name_list.append('hkk')
 								sock.sendall(str.encode("Hello hkk")
 						else:
