@@ -25,7 +25,6 @@ if __name__ == "__main__":
 		client_socket.connect((host, port))
 	except :
 		print ("Unable to connect to Server")
-		print (host)
 		sys.exit()
 
 	print ("Connect to server success!")
@@ -36,7 +35,7 @@ if __name__ == "__main__":
 		socket_list = [sys.stdin, client_socket]
 		read_sockets, write_sockets, error_sockets = select.select(socket_list, [], [])
 		for sock in read_sockets:
-			if sock == s:
+			if sock == client_socket:
 				data = sock.recv[1024]
 				if not data:
 					print("Disconneted from chat server\n")
