@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
 	# connect to server
 	try:
-		clientsocket.connet((host, port)))
+		clientsocket.connet((host, port))
 	except :
 		print ("Unable to connect to Server")
 		sys.exit()
