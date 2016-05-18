@@ -17,14 +17,15 @@ if __name__ == "__main__":
 	
 	host = '127.0.0.1'
 	port = 3003
-	clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	clientsocket.settimeout(2)
+	client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	client_socket.settimeout(2)
 
 	# connect to server
 	try:
-		clientsocket.connet((host, port))
+		client_socket.connect((host, port))
 	except :
 		print ("Unable to connect to Server")
+		print (host)
 		sys.exit()
 
 	print ("Connect to server success!")
@@ -32,7 +33,7 @@ if __name__ == "__main__":
 	passwd = hide_passwd()
 
 	while 1:
-		socket_list = [sys.stdin, clientsocket]
+		socket_list = [sys.stdin, client_socket]
 		read_sockets, write_sockets, error_sockets = select.select(socket_list, [], [])
 		for sock in read_sockets:
 			if sock == s:

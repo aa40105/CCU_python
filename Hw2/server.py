@@ -14,12 +14,12 @@ name_list = ['server']
 #main function
 if __name__ == "__main__":
 	__author__='HKK'
-	serversocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-	serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-	serversocket.bind(('127.0.0.1', 3003))
-	serversocket.listen(10)
+	server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+	server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+	server_socket.bind(('127.0.0.1', 3003))
+	server_socket.listen(10)
 
-	SOCKET_LIST.append(serversocket)
+	SOCKET_LIST.append(server_socket)
 	
 	print ("Server started !!")
 	
