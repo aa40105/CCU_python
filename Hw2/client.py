@@ -29,6 +29,7 @@ if __name__ == "__main__":
 
 	print ("Connect to server success!")
 	user = input('user:')
+	print (user)
 	passwd = hide_passwd()
 
 	while 1:
