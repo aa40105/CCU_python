@@ -17,7 +17,7 @@ if __name__ == "__main__":
 	
 	host = '127.0.0.1'
 	port = 3003
-	clientsocket = socket.socket(sicjet.AF_INET, socket.SOCK_STREAM)
+	clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	clientsocket.settimeout(2)
 
 	# connect to server
