@@ -36,4 +36,7 @@ if __name__ == "__main__":
 					if data:
 						dedata = data.decode("utf-8")
 						userpwd = dedata.split(' ')
-						#if(
+				except:
+					print(" ")
+
+
