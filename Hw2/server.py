@@ -2,7 +2,7 @@
 #20160515 by HKK
 #github link:https://github.com/aa40105/CCU_python/tree/master/Hw2
 
-import sys, socket, select, string, os
+import sys, socket, select, string, os,time
 
 	
 SOCKET_LIST = []
@@ -50,8 +50,8 @@ if __name__ == "__main__":
 							if(userpwd[1] =='hkkpw'):
 								name_list.append('hkk')
 								sock.sendall(str.encode("\nHello hkk "))
+								#time.sleep(0.1)
 								#sock.sendall(str.encode("\n"+hkkoffline))
-								#hkkoffline.pop()
 								statuslist[0] = "online"
 								#print(statuslist[0])
 							else:
@@ -63,7 +63,6 @@ if __name__ == "__main__":
 								name_list.append('cmh')
 								sock.sendall(str.encode("\nHello cmh "))
 								#sock.sendall(str.encode(cmhoffline))
-								#cmhoffline.pop()
 								statuslist[1] = "online"
 								#print(statuslist[1])
 							else:
@@ -74,8 +73,8 @@ if __name__ == "__main__":
 							if(userpwd[1] =='rangepw'):
 								name_list.append('range')
 								sock.sendall(str.encode("\nHello range "))
+								#time.sleep(0.1)
 								#sock.sendall(str.encode(rangeoffline))
-								#rangeoffline.pop()
 								statuslist[2] = "online"
 								#print(statuslist[2])
 							else:
