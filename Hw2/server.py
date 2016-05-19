@@ -50,6 +50,8 @@ if __name__ == "__main__":
 							if(userpwd[1] =='hkkpw'):
 								name_list.append('hkk')
 								sock.sendall(str.encode("\nHello hkk "))
+								#sock.sendall(str.encode("\n"+hkkoffline))
+								#hkkoffline.pop()
 								statuslist[0] = "online"
 								#print(statuslist[0])
 							else:
@@ -60,6 +62,8 @@ if __name__ == "__main__":
 							if(userpwd[1] =='cmhpw'):
 								name_list.append('cmh')
 								sock.sendall(str.encode("\nHello cmh "))
+								#sock.sendall(str.encode(cmhoffline))
+								#cmhoffline.pop()
 								statuslist[1] = "online"
 								#print(statuslist[1])
 							else:
@@ -70,6 +74,8 @@ if __name__ == "__main__":
 							if(userpwd[1] =='rangepw'):
 								name_list.append('range')
 								sock.sendall(str.encode("\nHello range "))
+								#sock.sendall(str.encode(rangeoffline))
+								#rangeoffline.pop()
 								statuslist[2] = "online"
 								#print(statuslist[2])
 							else:
@@ -160,15 +166,22 @@ if __name__ == "__main__":
 							if(userpwd[1] =='hkk'and statuslist[0] =='online' ):
 								for socket in SOCKET_LIST:
 									if(socket != server_socket and socket != sock):
-										socket.send(str.encode("\nreceive from "+ buff))
+										socket.sendall(str.encode("\nreceive from "+ buff))
+							#elif(userpwd[1] =='hkk'and statuslist[0] =='offline' ):
+							#	hkkoffline = ("\nreceive from " + buff)
+								
 							elif(userpwd[1] =='cmh'and statuslist[1] =='online' ):
 								for socket in SOCKET_LIST:
 									if(socket != server_socket and socket != sock):
 										socket.send(str.encode("\nreceive from "+ buff))
+							#elif(userpwd[1] =='cmh'and statuslist[1] =='offline' ):
+							#	cmhoffline = ("\nreceive from " + buff)
 							elif(userpwd[1] =='range'and statuslist[2] =='online' ):
 								for socket in SOCKET_LIST:
 									if(socket != server_socket and socket != sock):
 										socket.send(str.encode("\nreceive from "+ buff))
+							#elif(userpwd[1] =='range'and statuslist[2] =='offline' ):
+							#	rangeoffline = ("\nreceive from " + buff)
 						elif(userpwd[0] == 'sendfile'):
 							num = len(userpwd) -1
 							buff =''
@@ -184,7 +197,7 @@ if __name__ == "__main__":
 							if(userpwd[1] =='hkk'):
 								for socket in SOCKET_LIST:
 									if(socket != server_socket and socket !=sock):
-										socket.send(str.encode("\ntansmit from " + buff + " YES or NO "))
+										socket.send(str.encode("\ntransmit from " + buff + " YES or NO "))
 						elif(userpwd[0] == 'YES'):
 							print("sucess")
 								

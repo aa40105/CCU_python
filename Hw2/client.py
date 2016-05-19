@@ -48,12 +48,14 @@ if __name__ == "__main__":
 					tmp = tmpdecode.split(' ')
 					if(tmp[0] == 'receive' and tmp[2] != user):
 						print(data.decode('utf-8'))
-					#if(tmp[0] == 'transmit' and tmp[2] !=user):
-					#	print(data.decode('utf-8'))
-					#	result = input()
-					#	client_socket.send(str.encode(result)) 
-					#	print(result)
-					print(data.decode('utf-8'))
+					elif(tmp[0] == 'transmit' and tmp[2] !=user):
+						print(data.decode('utf-8'))
+						result = input("input")
+						print(result)
+						client_socket.send(str.encode(result)) 
+						print(result)
+					else:
+						print(data.decode('utf-8'))
 			else:
 				msg = input('>')
 				metamsg = msg.split(' ')
