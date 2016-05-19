@@ -197,8 +197,32 @@ if __name__ == "__main__":
 								for socket in SOCKET_LIST:
 									if(socket != server_socket and socket !=sock):
 										socket.send(str.encode("\ntransmit from " + buff + " YES or NO "))
+										f = open ('test.txt','r')
+										x = f.read()
+										f.close()
+										
+							if(userpwd[1] =='cmh'):
+								for socket in SOCKET_LIST:
+									if(socket != server_socket and socket !=sock):
+										socket.send(str.encode("\ntransmit from " + buff + " YES or NO "))
+										f = open ('test.txt','r')
+										x = f.read()
+										f.close()
+							if(userpwd[1] =='range'):
+								for socket in SOCKET_LIST:
+									if(socket != server_socket and socket !=sock):
+										socket.send(str.encode("\ntransmit from " + buff + " YES or NO "))
+										f = open ('test.txt','r')
+										x = f.read()
+										f.close()
 						elif(userpwd[0] == 'YES'):
-							print("sucess")
+							f1 = open ('test1.txt','w')
+							f1.write(x)
+							f1.close()
+							print("success")
+							socket.send(str.encode("\nsuccess"))
+						elif(userpwd[0] == 'NO'):
+							print("don't send")
 								
 				except:
 					print('')

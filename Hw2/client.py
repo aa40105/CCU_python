@@ -49,10 +49,7 @@ if __name__ == "__main__":
 					if(tmp[0] == 'receive' and tmp[2] != user):
 						print(data.decode('utf-8'))
 					elif(tmp[0] == 'transmit' and tmp[2] !=user):
-						print(data.decode('utf-8'))
-						#result = input("input")
-						print(result)
-						#client_socket.send(str.encode(result)) 
+						client_socket.send(str.encode(result)) 
 						print(result)
 					else:
 						print(data.decode('utf-8'))
@@ -71,4 +68,12 @@ if __name__ == "__main__":
 					client_socket.send(str.encode(msg + ' ' + user))
 				elif(metamsg[0] == 'sendfile'):
 					client_socket.send(str.encode(msg + ' ' + user))
+				elif(metamsg[0] == 'YES'):
+					client_socket.send(str.encode(msg + ' ' + user))
+				elif(metamsg[0] == 'NO'):
+					client_socket.send(str.encode(msg + ' ' + user))
+				elif(metamsg[0] == 'Sending'):
+					print("Sending...")
+				elif(metamsg[0] == 'success'):
+					print("success")
 									
