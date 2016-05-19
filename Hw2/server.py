@@ -13,9 +13,9 @@ cmhfriend = []
 rangefriend = []
 #0 hkk 1 cmh 2 range
 statuslist = ["offline","offline","offline"]
-hkkoffline = []
-cmhoffline = []
-rangeoffline =[]
+hkkoffline = ''
+cmhoffline = ''
+rangeoffline =''
 hkkonline =''
 cmhonline =''
 rangeonline = ''
@@ -51,7 +51,7 @@ if __name__ == "__main__":
 								name_list.append('hkk')
 								sock.sendall(str.encode("\nHello hkk "))
 								#time.sleep(0.1)
-								#sock.sendall(str.encode("\n"+hkkoffline))
+								sock.sendall(str.encode("\n"+hkkoffline))
 								statuslist[0] = "online"
 								#print(statuslist[0])
 							else:
@@ -62,7 +62,7 @@ if __name__ == "__main__":
 							if(userpwd[1] =='cmhpw'):
 								name_list.append('cmh')
 								sock.sendall(str.encode("\nHello cmh "))
-								#sock.sendall(str.encode(cmhoffline))
+								sock.sendall(str.encode(cmhoffline))
 								statuslist[1] = "online"
 								#print(statuslist[1])
 							else:
@@ -74,7 +74,7 @@ if __name__ == "__main__":
 								name_list.append('range')
 								sock.sendall(str.encode("\nHello range "))
 								#time.sleep(0.1)
-								#sock.sendall(str.encode(rangeoffline))
+								sock.sendall(str.encode(rangeoffline))
 								statuslist[2] = "online"
 								#print(statuslist[2])
 							else:
@@ -166,21 +166,21 @@ if __name__ == "__main__":
 								for socket in SOCKET_LIST:
 									if(socket != server_socket and socket != sock):
 										socket.sendall(str.encode("\nreceive from "+ buff))
-							#elif(userpwd[1] =='hkk'and statuslist[0] =='offline' ):
-							#	hkkoffline = ("\nreceive from " + buff)
+							elif(userpwd[1] =='hkk'and statuslist[0] =='offline' ):
+								hkkoffline = ("receive from " + buff)
 								
 							elif(userpwd[1] =='cmh'and statuslist[1] =='online' ):
 								for socket in SOCKET_LIST:
 									if(socket != server_socket and socket != sock):
 										socket.send(str.encode("\nreceive from "+ buff))
-							#elif(userpwd[1] =='cmh'and statuslist[1] =='offline' ):
-							#	cmhoffline = ("\nreceive from " + buff)
+							elif(userpwd[1] =='cmh'and statuslist[1] =='offline' ):
+								cmhoffline = ("receive from " + buff)
 							elif(userpwd[1] =='range'and statuslist[2] =='online' ):
 								for socket in SOCKET_LIST:
 									if(socket != server_socket and socket != sock):
 										socket.send(str.encode("\nreceive from "+ buff))
-							#elif(userpwd[1] =='range'and statuslist[2] =='offline' ):
-							#	rangeoffline = ("\nreceive from " + buff)
+							elif(userpwd[1] =='range'and statuslist[2] =='offline' ):
+								rangeoffline = ("receive from " + buff)
 						elif(userpwd[0] == 'sendfile'):
 							num = len(userpwd) -1
 							buff =''
