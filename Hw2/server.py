@@ -152,7 +152,7 @@ if __name__ == "__main__":
 							buff =''
 							count = 2;
 							
-							print(num)
+							#print(num)
 							buff = buff + userpwd[num] + ' say '
 							while(count < num):
 								buff = buff + userpwd[count] + ' '
@@ -170,8 +170,23 @@ if __name__ == "__main__":
 									if(socket != server_socket and socket != sock):
 										socket.send(str.encode("\nreceive from "+ buff))
 						elif(userpwd[0] == 'sendfile'):
-									print("sucess")
-								
+							num = len(userpwd) -1
+							buff =''
+							count = 2;
+							buff = buff + userpwd[num] + ' want transmit '
+							print(num)
+							while(count < num):
+								buff = buff + userpwd[count] + ' '
+								count += 1
+							filename = userpwd[2]
+							print(filename)
+							print(buff)
+							if(userpwd[1] =='hkk'):
+								for socket in SOCKET_LIST:
+									if(socket != server_socket and socket !=sock):
+										socket.send(str.encode("\ntansmit from " + buff + " YES or NO "))
+						elif(userpwd[0] == 'YES'):
+							print("sucess")
 								
 				except:
 					print('')

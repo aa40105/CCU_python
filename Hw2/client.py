@@ -48,6 +48,11 @@ if __name__ == "__main__":
 					tmp = tmpdecode.split(' ')
 					if(tmp[0] == 'receive' and tmp[2] != user):
 						print(data.decode('utf-8'))
+					#if(tmp[0] == 'transmit' and tmp[2] !=user):
+					#	print(data.decode('utf-8'))
+					#	result = input()
+					#	client_socket.send(str.encode(result)) 
+					#	print(result)
 					print(data.decode('utf-8'))
 			else:
 				msg = input('>')
@@ -64,3 +69,4 @@ if __name__ == "__main__":
 					client_socket.send(str.encode(msg + ' ' + user))
 				elif(metamsg[0] == 'sendfile'):
 					client_socket.send(str.encode(msg + ' ' + user))
+									
