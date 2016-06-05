@@ -9,5 +9,6 @@ from bs4 import BeautifulSoup
 
 if __name__ == '__main__ ':
 
-	print(sys.argv[1])
+	test = sys.argv[0]
+	print(test)
 
