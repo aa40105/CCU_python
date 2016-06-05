@@ -7,7 +7,7 @@
 import os,sys
 from bs4 import BeautifulSoup
 
-if __name__ == '__main__ ':
+if __name__ == "__main__":
 
 	print("hkk")
 	test = sys.argv[1]
