@@ -4,13 +4,21 @@
 #20160531 by HKK
 #git hub link:https://github.com/aa40105/CCU_python/tree/master/Hw3
 
-import os,sys
+import os,sys,requests
 from bs4 import BeautifulSoup
+
 
 if __name__ == "__main__":
 
-	print("hkk")
-	test = sys.argv[1]
-	print(test)
-	print("hello world")
+	#print(sys.argv[1])#url
+	#res = requests.get(sys.argv[1])parse
+	res = requests.get("http://www.ee.ccu.edu.tw")
+	soup = BeautifulSoup(res.text)
+	#print (soup.title.text)
+	for mail in soup.findAll("a"):
+		print(mail["href"])
+	#print (soup.select("p a"))
+
+
+
 
