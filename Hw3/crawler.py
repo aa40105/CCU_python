@@ -3,3 +3,11 @@
 #rachable from that web site.
 #20160531 by HKK
 #git hub link:https://github.com/aa40105/CCU_python/tree/master/Hw3
+
+import os,sys
+from bs4 import BeautifulSoup
+
+if __name__ == '__main__ ':
+
+	print(sys.argv[1])
+
