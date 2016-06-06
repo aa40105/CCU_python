@@ -7,8 +7,23 @@
 import os,sys,requests
 from bs4 import BeautifulSoup
 
-#def 
+def crawlerParse (url):
+	res = requests.get(sys.argv[1])
+	soup = BeautifulSoup(res.text,"html.parser")#linux add ,lxml ; windows add html.parser
+	for mail in soup.findAll("a"):
+		catch = mail["href"]
+		#print(catch)
+		if(catch.startswith("mail")):
+			print(mail["href"])
+		#elif(catch.startswith("https:")):
+		#	print("")
+		elif(catch.startswith("/")):
+			print(sys.argv[1] + catch)
+		#else :
+		#	print(sys.argv[1] + "/" + catch + "\n")
+		#	#crawlerParse(sys.argv[1] + "/" + catch)
 
+#20160607 test catch under page
 if __name__ == "__main__":
 
 	#print(sys.argv[1])#url
@@ -16,18 +31,7 @@ if __name__ == "__main__":
 	if (len(sys.argv) == 1):
 		print("Usage: python3 crawler.py [hostname]")
 		sys.exit(0)
-	res = requests.get(sys.argv[1])
-	soup = BeautifulSoup(res.text,"lxml")
-	#print (soup.title.text)
-	for mail in soup.findAll("a"):
-		catch = mail["href"]
-		if(catch.startswith("mailto")):
-			print(mail["href"])
-	for mail1 in soup.findAll("td"):
-		catch1 = mail1
-		if(catch1.startswith("mail")):
-			print(mail1)
-	#print (soup.select("p a"))
+	crawlerParse(sys.argv[1])
 
 
 
