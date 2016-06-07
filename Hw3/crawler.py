@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 url_list = []
 def crawlerParse (url):
 	res = requests.get(sys.argv[1])
-	soup = BeautifulSoup(res.text.encode("utf-8"),"lxml")#linux add ,lxml ; windows add html.parser
+	soup = BeautifulSoup(res.text.encode("utf-8"),"html.parser")#linux add ,lxml ; windows add html.parser
 	for mail in soup.findAll("a"):
 		catch = mail["href"]
 		#print(catch)
