@@ -15,17 +15,18 @@ global starturl
 def crawlerLink (url):
 	res = requests.get(url)
 	soup = BeautifulSoup(res.text.encode("utf-8"),"html.parser")#linux add ,lxml ; windows add html.parser
-	for mail in soup.findAll("a",href=True):
+	for crawlist in soup.findAll("a",href=True):
 		#print()
-		catch = mail["href"]
+		catch = crawlist["href"]
 		#print(type(catch))
 		#print(catch)
 		#print(catch.rfind("/"))
 		checkurl(catch)
 
 		#this is find mail location
-		#if(catch.startswith("mail")):
-		#	print(mail["href"])
+		if(catch.startswith("mail")):
+			mail(catch)
+			#print(mail["href"])
 		#time.sleep(1)
 		#elif(catch.startswith("https:")):
 		#	print("")
@@ -36,6 +37,8 @@ def crawlerLink (url):
 		#	#crawlerParse(sys.argv[1] + "/" + catch)
 
 def checkurl (url):
+	url = url.rstrip("/")
+	print(url)
 	if (url.startswith("/")):
 		url = sys.argv[1] + url.strip("/")
 		#print(url)
@@ -59,9 +62,6 @@ def checkurl (url):
 		if ((starturl == url) and(url not in url_list)):
 			url_list.append(url)
 			
-	elif (url.startswith("mail")):
-		if (url not in mail_list):
-			mail_list.append(url)
 	#elif (url.startswith("#")):
 	for x in url_list:
 		if(x.rfind("pdf") > 0):
@@ -69,29 +69,46 @@ def checkurl (url):
 		if(x.rfind("htm") > 0):
 			url_list.remove(x)
 
-def mail():
-	print("test mail")	
+def mail(mail):
+	
+	if(mail.startswith("mailto:")):
+		x = mail.rindex(":")
+		mail = mail[x + 1:len(mail)]
+		if (mail not in mail_list):
+			mail_list.append(mail)
+	
+	elif(mail.startswith("mail:")):
+		x = mail.rindex(":") 
+		mail = mail[x + 1:len(mail)]
+		if (mail not in mail_list):
+			mail_list.append(mail)
+	
 	
 if __name__ == "__main__":
 
-	#print(sys.argv[1])#url
 	if (len(sys.argv) == 1):
 		print("Usage: python3 crawler.py [hostname]")
 		sys.exit(0)
 	starturl = sys.argv[1]
 	crawlerLink(starturl)
-
-	#secondurl = url_list[0]
-	#crawlerLink(secondurl)
-	#secondurl = url_list[1]
-	#crawlerLink(secondurl)
+	url_count = len(url_list)
 	for x in url_list:
 		#print(type(x))
 		#print(x)
 		#secondurl = x.strip()
 		crawlerLink(x)
-	for y in url_list:
-		print(y)
 
+	for x in range(url_count,len(url_list)- 1,1):
+		temp_url = url_list[x]
+		crawlerLink(temp_url)
 
+	#test url list
+	#for y in url_list:
+	#	print(y)
 
+	#test mail list
+	for x in mail_list:
+		print(x)
+	print("numbers of mail:" )
+	print(len(mail_list))
+	#print(url_count)
