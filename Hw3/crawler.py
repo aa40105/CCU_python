@@ -15,9 +15,10 @@ global starturl
 def crawlerLink (url):
 	res = requests.get(url)
 	soup = BeautifulSoup(res.text.encode("utf-8"),"html.parser")#linux add ,lxml ; windows add html.parser
-	for mail in soup.findAll("a"):
-		#print(mail)
+	for mail in soup.findAll("a",href=True):
+		#print()
 		catch = mail["href"]
+		#print(type(catch))
 		#print(catch)
 		#print(catch.rfind("/"))
 		checkurl(catch)
@@ -54,16 +55,14 @@ def checkurl (url):
 			url_list.append(url)
 	elif (url.startswith("https:")):
 		url = url
-		if(starturl != url):
-			print("")
-		elif (url not in url_list):
+		#if(starturl != url):
+		if ((starturl == url) and(url not in url_list)):
 			url_list.append(url)
 			
 	elif (url.startswith("mail")):
 		if (url not in mail_list):
 			mail_list.append(url)
-	elif (url.startswith("#")):
-		print("")
+	#elif (url.startswith("#")):
 	for x in url_list:
 		if(x.rfind("pdf") > 0):
 			url_list.remove(x)
@@ -86,11 +85,11 @@ if __name__ == "__main__":
 	#crawlerLink(secondurl)
 	#secondurl = url_list[1]
 	#crawlerLink(secondurl)
-	#secondurl = url_list[2]
-	#crawlerLink(secondurl)
 	for x in url_list:
-		secondurl = x
-		crawlerLink(secondurl)
+		#print(type(x))
+		#print(x)
+		#secondurl = x.strip()
+		crawlerLink(x)
 	for y in url_list:
 		print(y)
 
