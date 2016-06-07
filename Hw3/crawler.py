@@ -1,6 +1,6 @@
 #This is a crawler program about crawl the web page
 #and extract the email addresses from all the web pages 
-#rachable from that web site.
+#reachable from that web site.
 #20160531 by HKK
 #git hub link:https://github.com/aa40105/CCU_python/tree/master/Hw3
 
@@ -9,15 +9,22 @@ from bs4 import BeautifulSoup
 
 
 url_list = []
-def crawlerParse (url):
-	res = requests.get(sys.argv[1])
+mail_list = []
+global starturl
+
+def crawlerLink (url):
+	res = requests.get(url)
 	soup = BeautifulSoup(res.text.encode("utf-8"),"html.parser")#linux add ,lxml ; windows add html.parser
 	for mail in soup.findAll("a"):
+		#print(mail)
 		catch = mail["href"]
 		#print(catch)
+		#print(catch.rfind("/"))
 		checkurl(catch)
-		if(catch.startswith("mail")):
-			print(mail["href"])
+
+		#this is find mail location
+		#if(catch.startswith("mail")):
+		#	print(mail["href"])
 		#time.sleep(1)
 		#elif(catch.startswith("https:")):
 		#	print("")
@@ -26,35 +33,66 @@ def crawlerParse (url):
 		#else :
 		#	print(sys.argv[1] + "/" + catch + "\n")
 		#	#crawlerParse(sys.argv[1] + "/" + catch)
-#20160607 test catch under page
+
 def checkurl (url):
 	if (url.startswith("/")):
-		url = sys.argv[1] + url
-		print(url)
+		url = sys.argv[1] + url.strip("/")
+		#print(url)
+		if (url not in url_list):
+			url_list.append(url)
 	elif (url.startswith("./")):
 		url = sys.argv[1] + url.strip("./")
+		if (url not in url_list):
+			url_list.append(url)
 	elif (url.startswith("index2.php")):
 		url = sys.argv[1] + url
+		if (url not in url_list):
+			url_list.append(url)
 	elif (url.startswith("english")):
 		url = sys.argv[1] + url
+		if (url not in url_list):
+			url_list.append(url)
 	elif (url.startswith("https:")):
 		url = url
-	if (url not in url_list):
-		#url_list.append(url)
-		print(url)
-		#print("check")
-		#for x in url_list:
-		#	print(url_list)	
+		if(starturl != url):
+			print("")
+		elif (url not in url_list):
+			url_list.append(url)
+			
+	elif (url.startswith("mail")):
+		if (url not in mail_list):
+			mail_list.append(url)
+	elif (url.startswith("#")):
+		print("")
+	for x in url_list:
+		if(x.rfind("pdf") > 0):
+			url_list.remove(x)
+		if(x.rfind("htm") > 0):
+			url_list.remove(x)
+
+def mail():
+	print("test mail")	
 	
 if __name__ == "__main__":
 
 	#print(sys.argv[1])#url
-	#res = requests.get(sys.argv[1])parse
 	if (len(sys.argv) == 1):
 		print("Usage: python3 crawler.py [hostname]")
 		sys.exit(0)
-	crawlerParse(sys.argv[1])
+	starturl = sys.argv[1]
+	crawlerLink(starturl)
 
+	#secondurl = url_list[0]
+	#crawlerLink(secondurl)
+	#secondurl = url_list[1]
+	#crawlerLink(secondurl)
+	#secondurl = url_list[2]
+	#crawlerLink(secondurl)
+	for x in url_list:
+		secondurl = x
+		crawlerLink(secondurl)
+	for y in url_list:
+		print(y)
 
 
 
