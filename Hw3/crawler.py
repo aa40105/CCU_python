@@ -7,6 +7,7 @@
 import os,sys,requests,time,glob
 from bs4 import BeautifulSoup
 
+#sys.argv[1] = "http://www.cs.ccu.edu.tw/members/lish?phpgrade=ms104&link=1"
 
 url_list = []
 mail_list = []
@@ -15,7 +16,7 @@ global starturl
 def crawlerLink (url):
 	#print(starturl)
 	res = requests.get(url)
-	soup = BeautifulSoup(res.text.encode("utf-8"),"html.parser")#linux add ,lxml ; windows add html.parser
+	soup = BeautifulSoup(res.text.encode("utf-8"),"lxml")#linux add ,lxml ; windows add html.parser
 	for crawlist in soup.findAll("a",href=True):
 		#print()
 		catch = crawlist["href"]
@@ -30,57 +31,40 @@ def crawlerLink (url):
 			#print(mail["href"])
 		#time.sleep(1)
 		#elif(catch.startswith("https:")):
-		#	print("")
-		#elif(catch.startswith("/")):
-		#	print(sys.argv[1] + catch)
-		#else :
-		#	print(sys.argv[1] + "/" + catch + "\n")
-		#	#crawlerParse(sys.argv[1] + "/" + catch)
-
 def checkurl (url):
-	url = url.rstrip("/")
 	tmpurl = starturl[0:starturl.rindex("/")]
-	if (url.startswith("./")):
-		url = tmpurl + url.strip(".")
-		if (url not in url_list):
-			url_list.append(url)
-	elif (url.startswith("/english")):
-		url = tmpurl+ url[url.rindex("/"):len(url) ]
-		#print(url)
-		if (url not in url_list):
-			url_list.append(url)
-	elif (url.startswith("/")):
-		url = tmpurl + url
-		#print(url)
-		if (url not in url_list):
-			url_list.append(url)
-	elif (url.startswith("../")):
-		url = starturl[0:starturl.rindex("/")] + url.strip("..")
-		if (url not in url_list):
-			url_list.append(url)
-	elif (url.startswith("index2.php")):
-		url = originurl + url
-		if (url not in url_list):
-			url_list.append(url)
-	elif (url.startswith("english")):
-		url = starturl + url
-		if (url not in url_list):
-			url_list.append(url)
-	elif (url.startswith("https://")):
+	#print(url)
+
+	if (url.startswith("http://")):
 		url = url
 		#if(starturl != url):
-		if ((starturl == url) and(url not in url_list)):
+		if ((starturl == url)and (url not in url_list)):
+			url_list.append(url)
+	
+	elif (url.startswith("./")):
+		url = sys.argv[1] + url.strip("./")
+		if (url not in url_list):
 			url_list.append(url)
 
-	elif (url.startswith("http://")):
-		url = url
-		#if(starturl != url):
-		if ((starturl == url) and(url not in url_list)):
+	elif (url.startswith("../")):
+		url = sys.argv[1] + url.strip("../")
+		if (url not in url_list):
+			url_list.append(url)
+
+	elif (url.startswith("/")):
+		url = url.lstrip("/")
+		url = sys.argv[1] + url
+		if (url not in url_list):
+			url_list.append(url)
+
+	elif (url.startswith("list.php?")):
+		url = sys.argv[1] + "members/" + url
+		if (url not in url_list):
 			url_list.append(url)
 	else :
-		url = starturl + "/" + url
-		#if ((starturl == url) and(url not in url_list)):
-		url_list.append(url)
+		url = sys.argv[1] + url 
+		if (url not in url_list):
+			url_list.append(url)
 		
 
 	#remove we don't need url		
@@ -88,17 +72,25 @@ def checkurl (url):
 	for x in url_list:
 		if(x.rfind("pdf") > 0):
 			url_list.remove(x)
-		if(x.rfind("htm") > 0):
+		elif(x.rfind("htm") > 0):
 			url_list.remove(x)
-		if(x.rfind("mail") > 0):
+		elif(x.rfind("mail") > 0):
 			url_list.remove(x)
-		if(x.rfind("doc") > 0):
+		elif(x.rfind("doc") > 0):
 			url_list.remove(x)
-		if(x.rfind("#") == len(x) - 1):
+		elif(x.rfind("#") == len(x) - 1):
 			url_list.remove(x)
-		if(x.rfind("flv") > 0):
+		elif(x.rfind("flv") > 0):
 			url_list.remove(x)
-		if(x == "http://www.cs.ccu.edu.tw/index.php"):
+		elif(x.rfind("ppt") > 0):
+			url_list.remove(x)
+		elif(x.rfind("jpg") > 0):
+			url_list.remove(x)
+		elif(x.rfind("zip") > 0):
+			url_list.remove(x)
+		elif(x == "http://www.cs.ccu.edu.tw/index.php"):
+			url_list.remove(x)
+		elif(x == sys.argv[1]):
 			url_list.remove(x)
 
 def mail(mail):
@@ -123,32 +115,27 @@ if __name__ == "__main__":
 		sys.exit(0)
 	originurl = sys.argv[1]
 	starturl = sys.argv[1]
+	secondcount = 0
+	mailcount = 1
 	crawlerLink(starturl)
 	url_count = len(url_list)
-	print(url_count)
+	#print(url_count)
 	#test second layer
 	
-	#starturl = url_list[0]
-	#crawlerLink(url_list[0])
-
-	#starturl = url_list[1]
-	#crawlerLink(url_list[1])
-
-	#for x in url_list:
-		#print(type(x))
-		#print(x)
-	#	secondurl = x.strip()
-		#crawlerLink(x)
-
-	#crawlerLink(url_list[2])
+	crawlerLink(url_list[0])
+	crawlerLink(url_list[1])
+	
 	for x in range(0,len(url_list),1):
 		temp_url = url_list[x]
-	#	print(temp_url)
 		crawlerLink(temp_url)
 
-	#for x in range(url_count,len(url_list)- 1,1):
-	#	temp_url = url_list[x]
-	#	crawlerLink(temp_url)
+#	for x in range(url_count,len(url_list)- 1,1):
+#		temp_url = url_list[x]
+#		crawlerLink(temp_url)
+	
+	for x in range(0,len(url_list)- 1,1):
+		temp_url = url_list[x]
+		crawlerLink(temp_url)
 
 	#test url list
 	#print("\n\n")
@@ -156,8 +143,14 @@ if __name__ == "__main__":
 		print(y)
 
 	#test mail list
+	f = open('mail.txt','w')
 	for x in mail_list:
+		y =str(mailcount) + ":" + x + "\n"
+		f.write(y)
 		print(x)
+		mailcount +=1
+	f.close()
+
 	#print("numbers of mail:" )
-	#print(len(mail_list))
+	print(len(mail_list))
 	#print(url_count)
