@@ -115,8 +115,16 @@ if __name__ == "__main__":
 		sys.exit(0)
 	originurl = sys.argv[1]
 	starturl = sys.argv[1]
+	txturl = originurl[originurl.index("w"):len(originurl)-1] + ".txt"
+	#print(txturl)
 	secondcount = 0
 	mailcount = 1
+	#if(os.path.isfile(txturl) == "True"):
+	#	f = open(txturl,"r")
+	#	print(f.read())
+	#	f.close()
+	#	sys.exit()
+
 	crawlerLink(starturl)
 	url_count = len(url_list)
 	#print(url_count)
@@ -127,6 +135,7 @@ if __name__ == "__main__":
 	
 	for x in range(0,len(url_list),1):
 		temp_url = url_list[x]
+		print(temp_url)
 		crawlerLink(temp_url)
 
 #	for x in range(url_count,len(url_list)- 1,1):
@@ -143,7 +152,7 @@ if __name__ == "__main__":
 		print(y)
 
 	#test mail list
-	f = open('mail.txt','w')
+	f = open(txturl,'w')
 	for x in mail_list:
 		y =str(mailcount) + ":" + x + "\n"
 		f.write(y)
