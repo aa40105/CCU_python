@@ -16,7 +16,7 @@ def download(url,title):
 	rs = requests.session()
 	res = rs.post("https://www.ptt.cc/ask/over18",verify = False, data = payload)
 	res = rs.get(url,verify = False)
-	soup = BeautifulSoup(res.text.encode("utf-8"),"lxml")
+	soup = BeautifulSoup(res.text.encode("utf-8"),"html.parser")
 	directory = title + "_file"
 	directory1 = title.replace(" ","\ ") + "_file"
 	#file path encode to utf-8
@@ -71,17 +71,27 @@ def download(url,title):
 	"""
 	return soup
 
-def modify(soup):
+def modify(soup, title):
 	css = ["hkk"]
 	y = 0
+	directory = title + "_file"
+	directory1 = title.replace(" ","\ ") + "_file"
+	#file path encode to utf-8
+	out = urllib.parse.quote(title + "_file")
 	#css
 	for x in soup.findAll("link",href = True):
-		print(x)
+		#print(directory)
+		#print(directory1)
+		#print(x)
 		if(y>0):
 			catch = x["href"]
-			x["href"] = "hkk"
+			catch = out + catch[catch.rindex("/"):]
+			print(catch)
+			#catch = 
+			#print(type(catch))
+			x["href"] = catch
 			soup.select("link")[y].replaceWith(x)
-		print(x)
+		#print(x)
 		#print(catch)
 	#	print(soup.select("link").href)
 		#print(x)
@@ -102,5 +112,5 @@ def modify(soup):
 	fp.close()
 
 soup=download(url,title)
-modify(soup)
+modify(soup,title)
 	
