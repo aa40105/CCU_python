@@ -15,8 +15,8 @@ def download(url,title):
 	rs = requests.session()
 	res = rs.post("https://www.ptt.cc/ask/over18",verify = False, data = payload)
 	res = rs.get(url,verify = False)
-	soup = BeautifulSoup(res.text.encode("utf-8"),"html.parser")
-	#soup = BeautifulSoup(res.text.encode("utf-8"),"lxml")
+	soup = BeautifulSoup(res.text,"html.parser")
+	#soup = BeautifulSoup(res.text.encode("utf-8"),"html.parser")
 	directory = title + "_file"
 	directory1 = title.replace(" ","\ ") + "_file"
 	#file path encode to utf-8
