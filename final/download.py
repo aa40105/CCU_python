@@ -1,6 +1,6 @@
 import os,sys,requests,time,glob,urllib
 from bs4 import BeautifulSoup
-#import "modify.py"
+import modify
 
 url = "https://www.ptt.cc/bbs/Gossiping/M.1466480440.A.8FA.html"
 title = "[新聞] 稻草這樣燒就對了 生物炭減大氣碳"
@@ -17,12 +17,12 @@ def download(url,title):
 	res = rs.post("https://www.ptt.cc/ask/over18",verify = False, data = payload)
 	res = rs.get(url,verify = False)
 	soup = BeautifulSoup(res.text.encode("utf-8"),"html.parser")
+	#soup = BeautifulSoup(res.text.encode("utf-8"),"lxml")
 	directory = title + "_file"
 	directory1 = title.replace(" ","\ ") + "_file"
 	#file path encode to utf-8
 	out = urllib.parse.quote(title + "_file")
 	#find jpg
-	#print(type(jpg))
 	for x in soup.findAll("a",href=True):
 		catch = x["href"]
 		#print(catch)
@@ -34,7 +34,6 @@ def download(url,title):
 			else:
 				os.mkdir(directory)
 				os.system("wget -qNP " + directory1 + " " + catch)
-			#print(catch)
 	#find css
 	for x in soup.findAll("link",rel=True):
 		catch = x["href"]
@@ -42,7 +41,6 @@ def download(url,title):
 		if(catch.rfind("css") > 0):
 			catch = "https:" + catch
 			css.add(catch)
-			#print(catch)
 			#wget css
 			if(os.path.exists(directory) == True):
 				os.system("wget -qNP " + directory1 + " " + catch)	
@@ -52,25 +50,17 @@ def download(url,title):
 	#find js
 	for x in soup.findAll("script",src=True):
 		catch = x["src"]
-		#print(catch)
 		if(catch.rfind(".js") > 0):
 			catch = "https:" + catch
 			js.add(catch)
-			#print(catch)
 			#wget css
 			if(os.path.exists(directory) == True):
 				os.system("wget -qNP " + directory1 + " " + catch)	
 			else:
 				os.mkdir(directory)
 				os.system("wget -qNP " + directory1 + " " + catch)
-	"""
-	#main html
-	fp = open(title + ".html","wb")
-	fp.write(soup.prettify("utf-8"))
-	fp.close()
-	"""
 	return soup
-
+"""
 def modify(soup, title):
 	css = ["hkk"]
 	y = 0
@@ -78,39 +68,40 @@ def modify(soup, title):
 	directory1 = title.replace(" ","\ ") + "_file"
 	#file path encode to utf-8
 	out = urllib.parse.quote(title + "_file")
+
 	#css
 	for x in soup.findAll("link",href = True):
-		#print(directory)
-		#print(directory1)
-		#print(x)
 		if(y>0):
 			catch = x["href"]
 			catch = out + catch[catch.rindex("/"):]
-			print(catch)
-			#catch = 
-			#print(type(catch))
 			x["href"] = catch
 			soup.select("link")[y].replaceWith(x)
-		#print(x)
-		#print(catch)
-	#	print(soup.select("link").href)
-		#print(x)
-		#soup.select("link href"[0]).replaceWith("hkk")
-		#print(soup.select("link")[y])
-		#soup["link"] = "hkk"
-		#print(soup.select("link")[y])
-		#x = "hkk"
-		#print(x)
-		#soup["link"] = "hkk"
-		#css.append(x)
-		#print(css[y])
-		y +=1
+		y+=1
+
+	#js
+	z = 0
+	for x in soup.findAll("script",src=True):
+		catch = x["src"]
+		catch = out + catch[catch.rindex("/"):]
+		x["src"] = catch
+		soup.select("script")[z].replaceWith(x)
+		z+=1
+	
+	#jpg
+	jpgcount = 0
+	for x in soup.findAll("img",src=True):
+		catch = x["src"]
+		if(catch.rfind("jpg") > 0):
+			catch = out + catch[catch.rindex("/"):]
+			x["src"] = catch
+			soup.select("img")[jpgcount].replaceWith(x)
+		jpgcount +=1
 	
 	#main html
 	fp = open(title + ".html","wb")
 	fp.write(soup.prettify("utf-8"))
 	fp.close()
-
+"""
 soup=download(url,title)
-modify(soup,title)
+modify.modify(soup,title)
 	
