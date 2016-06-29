@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 import modify
 
 #use  soup = download( url,title)
-url = "https://www.ptt.cc/bbs/Gossiping/M.1466480440.A.8FA.html"
-title = "[新聞] 稻草這樣燒就對了 生物炭減大氣碳"
+#url = "https://www.ptt.cc/bbs/Gossiping/M.1466480440.A.8FA.html"
+#title = "[新聞] 稻草這樣燒就對了 生物炭減大氣碳"
 jpg = set()
 css = set()
 js = set()
