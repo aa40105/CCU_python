@@ -22,29 +22,18 @@ for x in url_list:
 	catch = title_list[y]
 	index =str(index_list[y])
 	title_list[y] =catch[1:len(catch)-1] +"_"+str(index_list[y])
+	
+	"""
+	print(title_list[y])
+	#print(title_list[y])
 	#catch = str(index_list[y])
 	#soup = download.download(x,catch)
-	soup = download.download(x,title_list[y])
-	modify.modify(soup,title_list[y])
-	#modify.modify(soup,catch)
-	y +=1
-
-
-
-"""
-test1 = [1,2,3,4,5,6,7,8,9,0]
-print(test1)
-
-test2 = list(test1)
-print(test2)
-
-test1.reverse()
-
-test3 = []
-test3.extend(test1)
-print(test3)
-
-test3.extend(test1)
-print(test3)
-"""
-
+	y+=1
+	"""
+	
+	try:
+		soup = download.download(x,title_list[y])
+		modify.modify(soup,title_list[y])
+		y +=1
+	except:
+		pass
